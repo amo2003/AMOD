@@ -51,3 +51,14 @@ class CreateUserView(generics.CreateAPIView):
         except Exception as e:
             print("Error creating user:", str(e))
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+# note update view
+class NoteUpdate(generics.UpdateAPIView):
+    serializer_class = NoteSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Note.objects.filter(author=user)
+             

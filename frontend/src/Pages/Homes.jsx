@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../api";
-import Note from "../Components/Note"
-import "../styles/Home.css"
+import Note from "../Components/Note";
+import "../styles/Home.css";
 
 function Home() {
     const [notes, setNotes] = useState([]);
@@ -9,74 +9,92 @@ function Home() {
     const [title, setTitle] = useState("");
 
     useEffect(() => {
-        getNotes();
+        fetchNotes();
     }, []);
 
-    const getNotes = () => {
-        api
-            .get("/api/notes/")
-            .then((res) => res.data)
-            .then((data) => {
-                setNotes(data);
-                console.log(data);
-            })
-            .catch((err) => alert(err));
+    // Fetch notes only ONCE (page load)
+    const fetchNotes = async () => {
+        try {
+            const res = await api.get("/api/notes/");
+            setNotes(res.data);
+        } catch (err) {
+            alert(err);
+        }
     };
 
-    const deleteNote = (id) => {
-        api
-            .delete(`/api/notes/delete/${id}/`)
-            .then((res) => {
-                if (res.status === 204) alert("Note deleted!");
-                else alert("Failed to delete note.");
-                getNotes();
-            })
-            .catch((error) => alert(error));
+    // DELETE (fast)
+    const deleteNote = async (id) => {
+        try {
+            await api.delete(`/api/notes/delete/${id}/`);
+            setNotes((prev) => prev.filter((note) => note.id !== id));
+        } catch (error) {
+            alert(error);
+        }
     };
 
-    const createNote = (e) => {
+    // UPDATE (fast)
+    const updateNote = async (id, updatedData) => {
+        try {
+            const res = await api.put(`/api/notes/update/${id}/`, updatedData);
+            setNotes((prev) =>
+                prev.map((note) =>
+                    note.id === id ? res.data : note
+                )
+            );
+        } catch (error) {
+            alert(error);
+        }
+    };
+
+    // CREATE (fast)
+    const createNote = async (e) => {
         e.preventDefault();
-        api
-            .post("/api/notes/", { content, title })
-            .then((res) => {
-                if (res.status === 201) alert("Note created!");
-                else alert("Failed to make note.");
-                getNotes();
-            })
-            .catch((err) => alert(err));
+        try {
+            const res = await api.post("/api/notes/", { title, content });
+            setNotes((prev) => [res.data, ...prev]);
+
+            // Clear form
+            setTitle("");
+            setContent("");
+        } catch (err) {
+            alert(err);
+        }
     };
 
     return (
-        <div>
-            <div>
-                <h2>Notes</h2>
-                {notes.map((note) => (
-                    <Note note={note} onDelete={deleteNote} key={note.id} />
-                ))}
-            </div>
+        <div className="home-container">
+            <h2>Notes</h2>
+
+            {notes.length === 0 && <p>No notes yet.</p>}
+
+            {notes.map((note) => (
+                <Note
+                    key={note.id}
+                    note={note}
+                    onDelete={deleteNote}
+                    onUpdate={updateNote}
+                />
+            ))}
+
             <h2>Create a Note</h2>
-            <form onSubmit={createNote}>
-                <label htmlFor="title">Title:</label>
-                <br />
+
+            <form onSubmit={createNote} className="note-form">
+                <label>Title</label>
                 <input
                     type="text"
-                    id="title"
-                    name="title"
                     required
-                    onChange={(e) => setTitle(e.target.value)}
                     value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                 />
-                <label htmlFor="content">Content:</label>
-                <br />
+
+                <label>Content</label>
                 <textarea
-                    id="content"
-                    name="content"
                     required
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                ></textarea>
-                <br />
-                <input type="submit" value="Submit"></input>
+                />
+
+                <button type="submit">Add Note</button>
             </form>
         </div>
     );
