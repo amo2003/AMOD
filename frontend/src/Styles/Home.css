@@ -1,68 +1,140 @@
+/* Home.css */
+
 /* Container for the whole page */
-div {
-  font-family: Arial, sans-serif;
+.home-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f6fa;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Styles for the notes section */
-.notes-section {
-  margin-bottom: 2rem;
+/* Headings */
+.home-container h2 {
+  margin-bottom: 1rem;
+  color: #2f3640;
+  border-bottom: 2px solid #00a8ff;
+  display: inline-block;
+  padding-bottom: 0.3rem;
 }
 
-.notes-section h2 {
-  color: #333;
-  font-size: 24px;
+/* Note form */
+.note-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 1rem;
+  background-color: #ffffff;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
-/* Styles for individual notes - assuming your Note component has some container element */
-.note {
-  background-color: #f9f9f9;
-  border-left: 5px solid #007bff;
-  margin: 10px 0;
-  padding: 10px 15px;
-  border-radius: 5px;
+.note-form label {
+  font-weight: 600;
+  color: #2f3640;
 }
 
-/* Styles for the form section */
-form {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  margin: auto;
+.note-form input,
+.note-form textarea {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #dcdde1;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-form h2 {
-  color: #333;
-  font-size: 24px;
-  margin-bottom: 20px;
+.note-form input:focus,
+.note-form textarea:focus {
+  outline: none;
+  border-color: #00a8ff;
+  box-shadow: 0 0 5px rgba(0, 168, 255, 0.3);
 }
 
-form label {
-  font-weight: bold;
-  margin-top: 10px;
+.note-form textarea {
+  min-height: 80px;
+  resize: vertical;
 }
 
-form input,
-form textarea {
-  width: 100%;
-  padding: 8px;
-  margin: 8px 0 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-form input[type="submit"] {
-  background-color: #007bff;
+.note-form button {
+  align-self: flex-start;
+  padding: 0.6rem 1.2rem;
+  background-color: #00a8ff;
   color: white;
-  padding: 10px 20px;
+  font-weight: 600;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-form input[type="submit"]:hover {
-  background-color: #0056b3;
+.note-form button:hover {
+  background-color: #0097e6;
+  transform: translateY(-1px);
+}
+
+/* Notes container */
+.note-container {
+  background-color: #ffffff;
+  margin: 1rem 0;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.note-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.note-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #2f3640;
+  margin-bottom: 0.3rem;
+}
+
+.note-content {
+  font-size: 0.95rem;
+  color: #353b48;
+  margin-bottom: 0.5rem;
+  white-space: pre-wrap;
+}
+
+.note-date {
+  font-size: 0.8rem;
+  color: #718093;
+  margin-bottom: 0.5rem;
+}
+
+/* Delete button */
+.delete-button {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+  background-color: #e84118;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.delete-button:hover {
+  background-color: #c23616;
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .home-container {
+    padding: 1rem;
+  }
+
+  .note-form {
+    padding: 1rem;
+  }
 }

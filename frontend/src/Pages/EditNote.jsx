@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/Note.css";
+import "../Styles/EditNote.css";
 
 function EditNote({ note, onUpdate, onCancel }) {
   const [title, setTitle] = useState(note.title);

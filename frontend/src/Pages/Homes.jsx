@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import api from "../api";
 import Note from "../Components/Note";
-import "../styles/Home.css";
+import "../Styles/Home.css";
+import "../styles/Note.css";
 
 function Home() {
     const [notes, setNotes] = useState([]);

@@ -1,36 +1,83 @@
+/* Form.css */
+
+/* Center the form on the page */
 .form-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 5% auto;
+  padding: 40px 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin: 50px auto;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.form-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Form title */
+.form-container h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #333;
+  text-align: center;
+}
+
+/* Input fields */
 .form-input {
-  width: 90%;
-  padding: 10px;
-  margin: 10px 0;
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
+.form-input:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+  outline: none;
+}
+
+/* Submit button */
 .form-button {
-  width: 95%;
-  padding: 10px;
-  margin: 20px 0;
-  background-color: #007bff;
-  color: white;
+  width: 100%;
+  padding: 12px;
+  background: #4a90e2;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .form-button:hover {
-  background-color: #0056b3;
+  background: #357ab8;
+  transform: translateY(-2px);
+}
+
+/* Loading indicator styling */
+.loading-indicator {
+  margin-bottom: 15px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 500px) {
+  .form-container {
+    padding: 30px 20px;
+    margin: 10% auto;
+  }
+
+  .form-container h1 {
+    font-size: 1.5rem;
+  }
 }
