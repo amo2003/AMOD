@@ -6,6 +6,8 @@ from .serializers import UserSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Note
 from .serializers import NoteSerializer
+from .serializers import ProfileSerializer
+from .models import Profile
 
 # view to list and create notes
 class NoteListCreate(generics.ListCreateAPIView):
@@ -22,6 +24,16 @@ class NoteListCreate(generics.ListCreateAPIView):
             serializer.save(author=self.request.user)
         else:
             print(serializer.errors)    
+
+# note update view
+class NoteUpdate(generics.UpdateAPIView):
+    serializer_class = NoteSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Note.objects.filter(author=user)
+                         
 
 # view to delete a note
 class NoteDelete(generics.DestroyAPIView):
@@ -53,12 +65,9 @@ class CreateUserView(generics.CreateAPIView):
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
 
-# note update view
-class NoteUpdate(generics.UpdateAPIView):
-    serializer_class = NoteSerializer
+class UserProfileView(generics.RetrieveUpdateAPIView):
+    serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
-        user = self.request.user
-        return Note.objects.filter(author=user)
-             
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user)
